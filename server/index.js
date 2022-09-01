@@ -26,12 +26,13 @@ app.post("/register", (req,res)=>{
         console.log(err);
     })
 })
+
 app.get("/getCards", (req,res)=>{
     let SQL = "SELECT * from books"
-     db.query(SQL,(err, result)=> {
-        if(err) console.log(err)
+    db.query(SQL, (err, result)=>{
+        if(err)console.log(err)
         else res.send(result)
-     })
+    })
 })
 
 app.listen(4001, ()=>{

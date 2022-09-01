@@ -3,22 +3,16 @@ import Axios from "axios";
 import Card from "../components/card"
 export default function Home() {
 
-  const [values, setValues] = useState()
-  const [listGames, setListGames] = useState()
-  
-
+  const [values, setValues] = useState();
+  const [listGames, setListGames] = useState();
+  console.log(listGames)
   const handleChangeValues = (value) =>{
-  const [listGames, setListGames] = 
     setValues(prevValue=>({
       ...prevValue,
       [value.target.name]: value.target.value,
     }));
   }
-  useEffect(()=>{
-    Axios.get("http://localhost:4001/getCards").then((response)=>{
-      setListGames(response.data);
-    })
-  })
+  
   const handleSubmit = () =>{
     Axios.post("http://localhost:4001/register",{
     name: values.name,
@@ -29,6 +23,12 @@ export default function Home() {
   })
   
   }
+
+  useEffect(()=>{
+    Axios.get("http://localhost:4001/getCards")
+    .then((response)=>{
+      setListGames(response.data)});
+  },[])
   return (
     <div>
         <h1>Biblioteca</h1>
@@ -53,11 +53,9 @@ export default function Home() {
         />
         <button className="register--button" onClick={()=> 
           handleSubmit()}>Cadastrar</button>
-      {typeof listGames !== "undefined" && listGames.map((value, key)=>{
-
-      return <Card></Card>
-      })}
-      
+          {typeof listGames !== "undefined" && listGames.map((value)=>{
+          return <Card key={value.ID} listCard={listGames} setListCard={setListGames} id={value.ID} name={value.Nome} codigo={value.Codigo} preco={value.Preço}></Card>      
+          })}
     </div>
   )
 }

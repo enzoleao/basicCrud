@@ -1,5 +1,10 @@
-export default function Card(){
+export default function Card(props){
     return (
-        <h1>A</h1>
+        <div className="card--container">
+                <h1 className="card--title">{props.name}</h1>
+                <p className="card--codigo">{props.codigo}</p>
+                <p className="price">{props.preco}</p>
+                <p></p>
+        </div>
     )
 }
